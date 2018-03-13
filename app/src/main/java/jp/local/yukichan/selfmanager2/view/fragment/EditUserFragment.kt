@@ -55,6 +55,7 @@ class EditUserFragment : Fragment() {
             btSave.isEnabled = false
             launch(UI) {
                 async(CommonPool) { viewModel.save(createUser()) }.await()
+                async(CommonPool) { viewModel.test() }.await()
             }
         }
     }
@@ -83,6 +84,16 @@ class EditUserFragment : Fragment() {
             etName.setText(it?.name)
             etHeight.setText(it?.height.toString())
             Toast.makeText(activity, "update! $it", Toast.LENGTH_SHORT).show()
+        })
+        viewModel.measureInfo.observe(this, Observer {
+            if (it != null) {
+                val sb = StringBuffer()
+                it.forEach { info ->
+                    sb.append(info.id)
+                    sb.append(" ")
+                }
+                Toast.makeText(this.activity, sb.toString(), Toast.LENGTH_SHORT).show()
+            }
         })
     }
 

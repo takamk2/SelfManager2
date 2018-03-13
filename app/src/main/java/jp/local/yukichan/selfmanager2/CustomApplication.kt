@@ -1,6 +1,8 @@
 package jp.local.yukichan.selfmanager2
 
 import android.app.Application
+import jp.local.yukichan.selfmanager2.data.datastore.MeasureInfoDataStore
+import jp.local.yukichan.selfmanager2.data.datastore.internal.InternalMeasureInfoDataStore
 import timber.log.Timber
 
 /**
@@ -10,8 +12,12 @@ import timber.log.Timber
  */
 class CustomApplication : Application() {
 
+    lateinit var measureInfoDataStore: MeasureInfoDataStore
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+
+        measureInfoDataStore = InternalMeasureInfoDataStore(this)
     }
 }
